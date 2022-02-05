@@ -21,7 +21,8 @@ const blog_create_get = (req,res)=>{
 }
 
 const blog_create_post =(req,res)=>{
-    const blog  = new Blog(req.body);
+    const body = {...req.body,notes:req.file.path}
+    const blog  = new Blog(body);
 
     blog.save().then(result=>{
         res.redirect('/blogs');

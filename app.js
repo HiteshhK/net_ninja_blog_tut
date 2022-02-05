@@ -7,7 +7,7 @@ const blogRoutes = require('./routes/blogs');
 const app = express();
 
 //connect-to mongodb
-const dbURI =`mongodb+srv://<username>:password@node-tuts.ulgkb.mongodb.net/node-blog-tuts?retryWrites=true&w=majority`;
+const dbURI =`mongodb+srv://userName:password@node-tuts.ulgkb.mongodb.net/node-blog-tuts?retryWrites=true&w=majority`;
 
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true})
 .then((result)=> {
@@ -23,7 +23,7 @@ app.set('view engine','ejs');
 
 //middleware for static file, so that browser allow them
 app.use(express.static('public'));
-
+app.use('/uploads',express.static('uploads'));
 //takes url encoded data and pass it into an object, (req.body) that we can use, for example: form data from create form
 app.use(express.urlencoded({extended:true}));
 
