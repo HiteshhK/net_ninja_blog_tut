@@ -10,6 +10,7 @@
   "author": "hitesh kaushik",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "lodash": "^4.17.21",

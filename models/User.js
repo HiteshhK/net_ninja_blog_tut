@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {isEmail} = require('validator') 
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -17,18 +18,13 @@ const userSchema = new mongoose.Schema({
 });
 
 /** Hooks, function that runs before/after the document operation is performed */
-//fire a function after document is saved
-userSchema.post('save',(doc,next)=>{
-    console.log('New user was created and saved', doc);
-    
-    //need to call this callback otherwise further execution will stop
-    next();
-});
-
 //fire a funtion before doc is saved to db
-userSchema.pre('save',function(next){
-    //we are using function keyword instead of ()=> becasue we need to use this keyword, which will reference to userSchema, i.e before saving the doc state from schema object
-    console.log('User about to be created & saved', this);
+userSchema.pre('save',async function(next){
+    //generate a salt to be appended to password
+    const salt = await bcrypt.genSalt();
+    // pass salt+password to generate a new hashcode and make new password
+    this.password = await bcrypt.hash(this.password,salt);
+
     next();
 });
 
